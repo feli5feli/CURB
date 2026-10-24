@@ -1,0 +1,10 @@
+numpy>=1.24
+pyyaml
+pandas
+pyarrow
+scikit-learn
+# data processing only (encoding, image download)
+torch
+transformers
+pillow
+requests

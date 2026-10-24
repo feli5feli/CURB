@@ -1,0 +1,36 @@
+# CURB settings used for all reported results (Fakeddit).
+# Weibo: --set warm_frac=0.3.  Heterogeneous services: --set warm_frac=0.5 val_frac=0.
+
+# ---- collaboration protocol ----
+warm_frac: 0.15       # registration: posts 1-12,000
+val_frac: 0.10        # validation: posts 12,001-20,000; test: the remaining posts
+attack_start: 0.10    # attack strength rises linearly over 10-50% of the test stream
+attack_full: 0.50
+
+# ---- models ----
+g_hidden: 256         # prediction model g: 1024 -> 256 -> 2
+f_hidden: 256         # cross-modal predictor f_act: 512 -> 256 -> 512
+lr: 5.0e-4            # Adam, one post per update
+cm_weight: 0.1        # weight of L_cm in the update
+eta: 0.995            # EMA retention of f_ref
+
+# ---- CURB ----
+kappa: 1.0            # tolerance threshold of a, q and cbar (MADs)
+gamma: 1.0            # weight of unusually small residuals in a
+rho1: 0.9             # retention of the accumulated term u
+rho2: 0.3             # gain of the accumulated term u
+lam_q: 2.0            # weight of the anchor term q
+lam_c: 3.0            # weight of the cross-identity relation cbar
+beta_h: 0.95          # EMA retention of the behavioral signature
+K: 32                 # |I|
+tau_delta: 200.0      # staleness discount time constant (posts)
+
+# ---- attacks ----
+atk_label: pred       # estimated label: the attacker's prediction on its unmodified contributions
+trend_retention: 0.95 # EMA retention of the public aggregate trend
+pgd_steps: 30
+pgd_step: 1.5         # step size along the unit gradient
+pgd_restarts: 1
+jitter: 0.02          # per-identity jitter of Direct and Content-Init.
+beta_het: 0.1         # Diversified / Adaptive: strength of the identity-specific direction
+lam_P: 0.5            # Adaptive: damage--evasion trade-off
